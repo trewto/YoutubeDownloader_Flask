@@ -22,12 +22,13 @@ def index():
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                 # If the link is a playlist, extract all video links
                 if 'playlist' in link:
-                    info_dict = ydl.extract_info(link, download=False)
-                    for entry in info_dict['entries']:
+                    playlist_dict = ydl.extract_info(link, download=False)
+                    for video in playlist_dict['entries']:
                         download_links.append({
-                            'title': entry.get('title', 'Video'),
-                            'url': entry.get('url', None)
+                            'title': video.get('title', 'Video'),
+                            'url': video.get('url', None)
                         })
+                        print("process///+")
                 else:
                     # If it's a single video, extract the link as usual
                     info_dict = ydl.extract_info(link, download=False)

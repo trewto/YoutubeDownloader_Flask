@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Video Downloader</title>
+</head>
+<body>
+    <h1>YouTube Video Downloader</h1>
+    <form method="post">
+        <input type="text" name="link" placeholder="Enter YouTube video or playlist link" required>
+        <button type="submit">Get Download Link(s)</button>
+    </form>
+
+    {% if download_links %}
+        <h2>Download Links:</h2>
+        <ul>
+            {% for link in download_links %}
+                {% if link.url %}
+                    <li><a href="{{ url_for('download', url=link.url, title=link.title) }}" target="_blank">{{ link.title }}</a></li>
+                {% else %}
+                    <li>{{ link.title }}</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    {% elif download_links is not none %}
+        <p>No valid links found.</p>
+    {% endif %}
+</body>
+</html>
